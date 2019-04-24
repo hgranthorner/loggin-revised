@@ -21,6 +21,22 @@ const reducer = combineReducers({
 })
 
 // thunks
+const logout = () => {
+  return dispatch => {
+    return axios.delete('/auth')
+      .then(() => dispatch(getUserActionCreator({})))
+  }
+}
+
+const loginCheck = () => {
+  return dispatch => {
+    return axios.get('/auth')
+      .then(res => res.data)
+      .then(user => {
+        dispatch(getUserActionCreator(user))
+      })
+  }
+}
 
 const login = (email, password) => {
   return dispatch => {
@@ -33,4 +49,4 @@ const login = (email, password) => {
 }
 
 export default createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware))
-export { login }
+export { login, loginCheck, logout }

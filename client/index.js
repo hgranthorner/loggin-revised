@@ -2,14 +2,16 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Provider, connect} from 'react-redux'
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
-import store from './store'
+import store, { loginCheck } from './store'
 import Login from './login'
 import UserPage from './user-page'
 
 
 
 class _Main extends Component {
+
   componentDidMount () {
+    this.props.requestLoginCheck()
   }
 
   render () {
@@ -30,14 +32,20 @@ class _Main extends Component {
   }
 };
 
-const mapStateToProps = ({ user })=> {
+const mapStateToProps = ({ user }) => {
   console.log(user)
   return {
     isLoggedIn: !!user.id
   };
 };
 
-const Main = connect(mapStateToProps)(_Main);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    requestLoginCheck: () => dispatch(loginCheck())
+  }
+}
+
+const Main = connect(mapStateToProps, mapDispatchToProps)(_Main);
 
 ReactDOM.render(
   <Provider store={store}>
