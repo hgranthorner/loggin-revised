@@ -30,7 +30,8 @@ class _Main extends Component {
   }
 };
 
-const mapStateToProps = ({ user})=> {
+const mapStateToProps = ({ user })=> {
+  console.log(user)
   return {
     isLoggedIn: !!user.id
   };
